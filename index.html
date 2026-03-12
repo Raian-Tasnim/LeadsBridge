@@ -6,15 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Fintrixx</title>
 
-    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
@@ -26,6 +23,7 @@
                         dark: '#1a1a1a'
                     },
                     fontFamily: {
+                        // This sets Oswald as the default sans font
                         sans: ['Oswald', 'sans-serif']
                     }
                 }
@@ -37,6 +35,11 @@
         html {
             scroll-behavior: smooth;
         }
+        /* Apply Oswald globally */
+        
+        body {
+            font-family: 'Oswald', sans-serif;
+        }
         
         .btn-shadow {
             box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 1);
@@ -46,26 +49,33 @@
             transform: translate(2px, 2px);
             box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 1);
         }
+        /* Container for 1440px limit */
+        
+        .page-container {
+            max-width: 1440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 
 <body class="font-sans antialiased bg-white overflow-x-hidden">
 
-    <!-- Sections -->
-    <div id="hero-section"></div>
-    <div id="about-section"></div>
-    <div id="whyChooseUs-section"></div>
-    <div id="services-section"></div>
-    <div id="approach-section"></div>
-    <div id="growth-section"></div>
-    <div id="growthDark-section"></div>
-    <div id="contact-section"></div>
-    <div id="footer-section"></div>
+    <div class="page-container">
+        <div id="hero-section"></div>
+        <div id="about-section"></div>
+        <div id="whyChooseUs-section"></div>
+        <div id="services-section"></div>
+        <div id="approach-section"></div>
+        <div id="growth-section"></div>
+        <div id="growthDark-section"></div>
+        <div id="contact-section"></div>
+        <div id="footer-section"></div>
+    </div>
+
     <script>
         async function loadComponent(elementId, filePath) {
-
             try {
-
                 const response = await fetch(filePath);
                 if (!response.ok) throw new Error("File not found");
 
@@ -74,26 +84,20 @@
 
                 container.innerHTML = html;
 
-
                 const scripts = container.querySelectorAll("script");
-
                 scripts.forEach(oldScript => {
-
                     const newScript = document.createElement("script");
-
                     if (oldScript.src) {
                         newScript.src = oldScript.src;
                     } else {
                         newScript.textContent = oldScript.textContent;
                     }
-
                     document.body.appendChild(newScript);
                 });
 
             } catch (error) {
                 console.error(`Error loading ${filePath}:`, error);
             }
-
         }
 
         // Load sections
