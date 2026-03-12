@@ -1,0 +1,146 @@
+<section id="contact" class="bg-white py-20 px-6 font-sans scroll-mt-20">
+    <div class="max-w-7xl mx-auto text-center">
+
+        <div class="inline-flex items-center gap-2 mb-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" class="w-6 h-6">
+            <span class="text-[#ff9e00] font-bold text-sm uppercase tracking-widest">Contact Us</span>
+        </div>
+
+        <h2 class="text-4xl md:text-6xl font-black text-gray-900 mb-2 uppercase tracking-tighter leading-tight">
+            Let's Scale Your <span class="text-[#ff9e00]">Business!</span>
+        </h2>
+
+        <p class="text-gray-800 font-medium mb-12">FINTRIXX — Your Amazon Growth Partner</p>
+
+        <div class="max-w-5xl mx-auto bg-white border border-gray-200 rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+
+            <!-- LEFT PANEL -->
+
+            <div class="w-full md:w-1/2 p-12 border-b md:border-b-0 md:border-r border-gray-100 flex flex-col text-left">
+
+                <p class="text-gray-500 font-bold mb-4">Naim</p>
+
+                <h3 class="text-3xl font-bold text-gray-900 mb-8">
+                    Book Your Strategy Session: Accelerate Your Growth!
+                </h3>
+
+                <div class="space-y-6">
+
+                    <div class="flex items-center gap-4 text-gray-600">
+                        <i class="fas fa-clock text-xl"></i>
+                        <span class="font-bold text-lg">30 min</span>
+                    </div>
+
+                    <div class="flex items-start gap-4 text-gray-600">
+                        <i class="fas fa-video text-xl mt-1"></i>
+                        <span class="text-lg">Web conferencing details provided upon confirmation.</span>
+                    </div>
+
+                </div>
+
+                <div class="mt-auto pt-10">
+                    <button class="text-gray-400 text-sm">Cookie settings</button>
+                </div>
+
+            </div>
+
+            <!-- RIGHT PANEL -->
+
+            <div class="w-full md:w-1/2 p-10 flex flex-col">
+
+                <h4 class="text-xl font-bold text-gray-900 mb-8 text-left">Select a Date & Time</h4>
+
+                <div class="flex items-center justify-center gap-6 mb-8">
+
+                    <button onclick="changeMonth(-1)" class="w-10 h-10 flex items-center justify-center text-blue-600 hover:bg-blue-50 rounded-full">
+<i class="fas fa-chevron-left text-sm"></i>
+</button>
+
+                    <span id="monthDisplay" class="text-lg font-bold text-gray-800 min-w-[140px] text-center"></span>
+
+                    <button onclick="changeMonth(1)" class="w-10 h-10 flex items-center justify-center text-blue-600 hover:bg-blue-50 rounded-full">
+<i class="fas fa-chevron-right text-sm"></i>
+</button>
+
+                </div>
+
+                <div class="grid grid-cols-7 text-center mb-4">
+                    <div class="text-[11px] font-bold text-gray-400 uppercase">Sun</div>
+                    <div class="text-[11px] font-bold text-gray-400 uppercase">Mon</div>
+                    <div class="text-[11px] font-bold text-gray-400 uppercase">Tue</div>
+                    <div class="text-[11px] font-bold text-gray-400 uppercase">Wed</div>
+                    <div class="text-[11px] font-bold text-gray-400 uppercase">Thu</div>
+                    <div class="text-[11px] font-bold text-gray-400 uppercase">Fri</div>
+                    <div class="text-[11px] font-bold text-gray-400 uppercase">Sat</div>
+                </div>
+
+                <div id="calendarDays" class="grid grid-cols-7 gap-2 text-center"></div>
+
+                <div class="mt-auto pt-8 border-t border-gray-50 text-left">
+
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase mb-2 tracking-widest">Timezone</label>
+
+                    <select class="text-sm font-bold text-gray-700">
+<option>Bangladesh Time</option>
+<option>Eastern Time</option>
+<option>Central Time</option>
+<option>Pacific Time</option>
+</select>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+<script>
+    window.initCalendar = function() {
+        let currentDate = new Date();
+        const calendarDays = document.getElementById("calendarDays");
+        const monthDisplay = document.getElementById("monthDisplay");
+
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        // 1. Define the changeMonth function so the buttons work
+        window.changeMonth = function(offset) {
+            currentDate.setMonth(currentDate.getMonth() + offset);
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            monthDisplay.textContent = months[month] + " " + year;
+            calendarDays.innerHTML = "";
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const totalDays = new Date(year, month + 1, 0).getDate();
+
+            // Add empty slots for the beginning of the month
+            for (let i = 0; i < firstDay; i++) {
+                calendarDays.innerHTML += `<div></div>`;
+            }
+
+            // Render each day as a button
+            for (let day = 1; day <= totalDays; day++) {
+                calendarDays.innerHTML += `
+                    <div class="flex items-center justify-center">
+                        <button class="w-10 h-10 rounded-full font-bold text-blue-600 hover:bg-blue-50">
+                            ${day}
+                        </button>
+                    </div>`;
+            }
+        }
+
+        // 2. IMPORTANT: Call the function to display the calendar immediately
+        renderCalendar();
+    };
+
+    // Ensure initialization runs if the component is loaded
+    initCalendar();
+</script>
