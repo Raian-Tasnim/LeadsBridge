@@ -80,12 +80,12 @@
 
                     <label class="block text-[10px] font-bold text-gray-400 uppercase mb-2 tracking-widest">Timezone</label>
 
-                    <select class="text-sm font-bold text-gray-700">
-<option>Bangladesh Time</option>
-<option>Eastern Time</option>
-<option>Central Time</option>
-<option>Pacific Time</option>
-</select>
+                    <select class="text-sm font-semibold text-gray-700">
+                        <option>Asia/Dhaka (3.00 pm)</option>
+                        <option>UK, Ireland, Lisbon Time (14:37)</option>
+                        <option>Eastern Standard Time (EST)</option>
+                        <option>Central European Time (CET)</option>
+                    </select>
 
                 </div>
 
@@ -97,6 +97,9 @@
 <script>
     window.initCalendar = function() {
         let currentDate = new Date();
+        // Use an array to store multiple selected dates
+        let selectedDates = [];
+
         const calendarDays = document.getElementById("calendarDays");
         const monthDisplay = document.getElementById("monthDisplay");
 
@@ -105,11 +108,25 @@
             "July", "August", "September", "October", "November", "December"
         ];
 
-        // 1. Define the changeMonth function so the buttons work
         window.changeMonth = function(offset) {
             currentDate.setMonth(currentDate.getMonth() + offset);
             renderCalendar();
         }
+
+        window.selectDay = function(day) {
+            // Create a unique identifier for the date (Year-Month-Day)
+            const dateId = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${day}`;
+
+            const index = selectedDates.indexOf(dateId);
+            if (index > -1) {
+                // If already selected, remove it (toggle off)
+                selectedDates.splice(index, 1);
+            } else {
+                // If not selected, add it to the list
+                selectedDates.push(dateId);
+            }
+            renderCalendar();
+        };
 
         function renderCalendar() {
             const year = currentDate.getFullYear();
@@ -121,26 +138,31 @@
             const firstDay = new Date(year, month, 1).getDay();
             const totalDays = new Date(year, month + 1, 0).getDate();
 
-            // Add empty slots for the beginning of the month
             for (let i = 0; i < firstDay; i++) {
                 calendarDays.innerHTML += `<div></div>`;
             }
 
-            // Render each day as a button
             for (let day = 1; day <= totalDays; day++) {
+                const dateId = `${year}-${month}-${day}`;
+                const isSelected = selectedDates.includes(dateId);
+
+                // bg-blue-600/30 applies the 30% opacity you requested
+                const activeClasses = isSelected ?
+                    "bg-blue-600/30 text-blue-600" :
+                    "text-black hover:bg-gray-100";
+
                 calendarDays.innerHTML += `
                     <div class="flex items-center justify-center">
-                        <button class="w-10 h-10 rounded-full font-bold text-blue-600 hover:bg-blue-50">
+                        <button onclick="selectDay(${day})" 
+                                class="w-10 h-10 rounded-full font-bold transition-all duration-200 ${activeClasses}">
                             ${day}
                         </button>
                     </div>`;
             }
         }
 
-        // 2. IMPORTANT: Call the function to display the calendar immediately
         renderCalendar();
     };
 
-    // Ensure initialization runs if the component is loaded
     initCalendar();
 </script>
